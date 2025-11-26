@@ -4,7 +4,16 @@ import Google from 'next-auth/providers/google'
 import connectMongoDB from './libs/mongodb'
 import User from './models/user'
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [Google, GitHub],
+  providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!, // .env 5줄
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // .env 6줄
+    }),
+    GitHub({
+      clientId: process.env.GITHUB_ID!, // .env 8줄
+      clientSecret: process.env.GITHUB_SECRET!, // .env 9줄
+    }),
+  ],
   pages: {
     signIn: '/login',
   },
