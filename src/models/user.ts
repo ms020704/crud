@@ -10,8 +10,11 @@ const userSchema = new Schema<IUser>({
   email: { type: String, required: true, unique: true },
 })
 
-// 🔥 핵심 수정: mongoose.models가 undefined여도 절대 에러 안 나게
+// mongoose.models가 undefined일 수도 있으니 한 번 변수로 받는다
+const models = mongoose.models as { User?: Model<IUser> } | undefined
+
+// models?.User 가 있으면 그거 쓰고, 없으면 새로 모델 생성
 const User: Model<IUser> =
-  (mongoose.models as any)?.User || mongoose.model<IUser>('User', userSchema)
+  models?.User ?? mongoose.model<IUser>('User', userSchema)
 
 export default User
