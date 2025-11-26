@@ -1,4 +1,4 @@
-import mongoose, { Model, Schema } from 'mongoose'
+import mongoose, { Schema, Model } from 'mongoose'
 
 interface IUser {
   name: string
@@ -10,12 +10,8 @@ const userSchema = new Schema<IUser>({
   email: { type: String, required: true, unique: true },
 })
 
-let User: Model<IUser>
-
-try {
-  User = mongoose.model<IUser>('User')
-} catch {
-  User = mongoose.model<IUser>('User', userSchema)
-}
+// 🔥 핵심 수정: mongoose.models가 undefined여도 절대 에러 안 나게
+const User: Model<IUser> =
+  (mongoose.models as any)?.User || mongoose.model<IUser>('User', userSchema)
 
 export default User

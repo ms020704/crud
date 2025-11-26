@@ -1,7 +1,6 @@
 import User from '@/models/user'
 import connectMongoDB from '@/libs/mongodb'
 import { NextRequest, NextResponse } from 'next/server'
-
 export async function POST(request: NextRequest) {
   try {
     const { name, email } = await request.json()
@@ -13,7 +12,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
-
     // 이메일 형식 검사
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       return NextResponse.json(
@@ -21,10 +19,8 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
-
     await connectMongoDB()
     const user = await User.create({ name, email })
-
     return NextResponse.json(
       { message: 'User registered', user },
       { status: 201 }

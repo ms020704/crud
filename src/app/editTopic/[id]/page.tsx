@@ -1,6 +1,7 @@
 import { auth } from '@/auth'
 import EditTopicForm from '@/components/EditTopicForm'
 import { redirect } from 'next/navigation'
+import React from 'react'
 const apiUrl = process.env.API_URL
 
 const getTopicById = async (id: string) => {
@@ -9,7 +10,7 @@ const getTopicById = async (id: string) => {
       cache: 'no-store',
     })
     if (!res.ok) {
-      throw new Error('Failed to fetch topic.')
+      throw new Error('Failed to fetch topic')
     }
     return res.json()
   } catch (error) {

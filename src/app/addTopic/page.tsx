@@ -1,7 +1,8 @@
 'use client'
+
 import { useSession } from 'next-auth/react'
 import { redirect, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 export default function AddTopic() {
   const [title, setTitle] = useState('')
@@ -15,9 +16,11 @@ export default function AddTopic() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     if (!title || !description) {
-      alert('Title and description are required.')
+      alert('Title과 Description을 모두 입력해야 합니다.')
     }
+
     try {
       const res = await fetch('/api/topics', {
         method: 'POST',
@@ -30,7 +33,7 @@ export default function AddTopic() {
         router.push('/')
         router.refresh()
       } else {
-        throw new Error('Failed to create a topic')
+        throw new Error('Topic 생성에 실패했습니다.')
       }
     } catch (error) {
       console.log(error)
@@ -40,8 +43,8 @@ export default function AddTopic() {
   return (
     <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
       <input
-        className="border border-slate-500 p-4"
         type="text"
+        className="border border-slate-500 p-4"
         placeholder="Topic Title"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setTitle(e.target.value)
@@ -57,7 +60,7 @@ export default function AddTopic() {
         value={description}
       />
       <button
-        className="bg-green-800 text-white font-bold px-6 py-3 w-fit rounded-md"
+        className="bg-green-800 hover:bg-green-900 text-white font-bold px-6 py-3 w-fit rounded-md"
         type="submit"
       >
         Add Topic

@@ -1,5 +1,5 @@
 import connectMongoDB from '@/libs/mongodb'
-import Log from '@/models/log'
+import Log from '@/models/Log'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
@@ -7,8 +7,13 @@ export async function POST(request: NextRequest) {
     const { email } = await request.json()
     await connectMongoDB()
     await Log.create({ email })
-    return NextResponse.json({ message: 'Login event logged' }, { status: 201 })
+    return NextResponse.json(
+      {
+        message: 'Login event logged',
+      },
+      { status: 201 }
+    )
   } catch (error) {
-    console.error('Error logging login event:', error)
+    console.error(error)
   }
 }

@@ -1,4 +1,5 @@
 'use client'
+
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -16,6 +17,7 @@ export default function EditTopicForm({
   const [newTitle, setNewTitle] = useState(title)
   const [newDescription, setNewDescription] = useState(description)
   const router = useRouter()
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
@@ -39,24 +41,24 @@ export default function EditTopicForm({
   return (
     <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
       <input
-        className="border border-slate-500 p-4"
         type="text"
+        className="border border-slate-500 p-4"
         placeholder="Topic Title"
+        value={newTitle}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setNewTitle(e.target.value)
         }
-        value={newTitle}
       />
       <textarea
         className="border border-slate-500 p-4 h-32"
         placeholder="Topic Description"
+        value={newDescription}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
           setNewDescription(e.target.value)
         }
-        value={newDescription}
       />
       <button
-        className="bg-green-800 text-white font-bold px-6 py-3 w-fit rounded-md"
+        className="bg-green-800 hover:bg-green-900 text-white font-bold px-6 py-3 w-fit rounded-md"
         type="submit"
       >
         Update Topic
